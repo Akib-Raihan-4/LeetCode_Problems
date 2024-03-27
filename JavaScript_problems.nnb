@@ -1,0 +1,238 @@
+{
+    "cells": [
+        {
+            "language": "markdown",
+            "source": [
+                "## Closures"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### 1. Create Hello World Function\r\n\r\n<div class=\"elfjS\" data-track-load=\"description_content\">Write a function&nbsp;<code>createHelloWorld</code>.&nbsp;It should return a new function that always returns&nbsp;<code>\"Hello World\"</code>.\r\n<p>&nbsp;</p>\r\n<p><strong class=\"example\">Example 1:</strong></p>\r\n\r\n<pre><strong>Input:</strong> args = []\r\n<strong>Output:</strong> \"Hello World\"\r\n<strong>Explanation:</strong>\r\nconst f = createHelloWorld();\r\nf(); // \"Hello World\"\r\n\r\nThe function returned by createHelloWorld should always return \"Hello World\".\r\n</pre>\r\n\r\n<p><strong class=\"example\">Example 2:</strong></p>\r\n\r\n<pre><strong>Input:</strong> args = [{},null,42]\r\n<strong>Output:</strong> \"Hello World\"\r\n<strong>Explanation:</strong>\r\nconst f = createHelloWorld();\r\nf({}, null, 42); // \"Hello World\"\r\n\r\nAny arguments could be passed to the function but it should still always return \"Hello World\".\r\n</pre>\r\n\r\n<p>&nbsp;</p>\r\n<p><strong>Constraints:</strong></p>\r\n\r\n<ul>\r\n\t<li><code>0 &lt;= args.length &lt;= 10</code></li>\r\n</ul>\r\n</div>"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "var createHelloWorld = function(){\r\n    return function(...args){\r\n        return \"Hello World\";\r\n    }\r\n};"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "let f = createHelloWorld();\r\nf();"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[32m'Hello World'\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### 2. Counter"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "var createCounter = function(n){\r\n    return function(){\r\n        return n++;\r\n    }\r\n};"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "var counter = createCounter(10);\r\ncounter()\r\ncounter()"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[33m11\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### 3. To be or Not to be\r\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "var expect = function(val){\r\n    return {\r\n        toBe: (val2) =>{\r\n            if(val === val2){\r\n                return true;\r\n            }\r\n            else throw new Error(\"Not Equal\")\r\n        },\r\n        notToBe: (val2) =>{\r\n            if(val !== val2){\r\n                return true;\r\n            }\r\n            else throw new Error(\"Equal\");\r\n        }\r\n    }\r\n};"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "expect(5).toBe(5)"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[33mtrue\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### 4. Counter II"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "var createCounter2 = function(init){\r\n    let temp = init;\r\n    return{\r\n        increment:()=>{\r\n            return ++temp;\r\n        },\r\n        reset:()=>{\r\n            temp = init;\r\n            return temp;\r\n        },\r\n        decrement:()=>{\r\n            return --temp;\r\n        }\r\n    }\r\n}"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "var counter2 = createCounter2(10)\r\ncounter2.increment()"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[33m11\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                ""
+            ],
+            "outputs": []
+        }
+    ]
+}
