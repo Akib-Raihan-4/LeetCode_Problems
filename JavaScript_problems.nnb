@@ -228,6 +228,105 @@
             ]
         },
         {
+            "language": "markdown",
+            "source": [
+                "## Basic Array Transfomations"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### 5. Apply Transform Over Each Element in Array"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "function plusone(n){\r\n    return n + 1;\r\n}\r\n\r\nvar map = function(arr, fn){\r\n    for(var i = 0; i < arr.length; i+=1){\r\n        arr[i] = fn(arr[i],i)\r\n    }\r\n    return arr\r\n}"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "var arr = [1,2,3]\r\n\r\nconsole.log(map(arr,plusone))"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "[ 2, 3, 4 ]",
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### 6. Filter Element from Array"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "function greaterThan10(n){\r\n    return n>10;\r\n}\r\n\r\nvar filter = function(arr,fn){\r\n    var result = [];\r\n    arr.forEach((element, index) => {\r\n        if(fn(element, index)){\r\n            result.push(element);\r\n        }\r\n    });\r\n    return result\r\n}"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "arr = [0,5,20,30]\r\n\r\nconsole.log(filter(arr,greaterThan10))\r\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "[ 20, 30 ]",
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "language": "typescript",
             "source": [
                 ""
