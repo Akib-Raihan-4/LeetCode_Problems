@@ -327,6 +327,59 @@
             ]
         },
         {
+            "language": "markdown",
+            "source": [
+                "### 7. Array Reduce Transformation"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "var reduce = function(nums, fn, init){\r\n    nums.forEach(element=>{\r\n        init = fn(init, element)\r\n        \r\n    });\r\n    return init\r\n}"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "let nums = [1,2,3,4]\r\nfunction sum(accum, curr){\r\n    return accum + curr * curr;\r\n}\r\nlet init = 100\r\n\r\nconsole.log(reduce(nums, sum,init))"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "130",
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "## Function Transformation"
+            ],
+            "outputs": []
+        },
+        {
             "language": "typescript",
             "source": [
                 ""
