@@ -380,6 +380,52 @@
             "outputs": []
         },
         {
+            "language": "markdown",
+            "source": [
+                "### Function Composition"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "var compose = function(functions){\r\n    return function(x){\r\n        for(let i = functions.length-1; i >= 0; i-=1){\r\n            x = functions[i](x)\r\n        }\r\n        return x\r\n    }\r\n}"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "const fn = compose([x => x + 1, x => x * x, x => 2 * x])\r\nconsole.log(fn(4))"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "65",
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "language": "typescript",
             "source": [
                 ""
