@@ -382,7 +382,7 @@
         {
             "language": "markdown",
             "source": [
-                "### Function Composition"
+                "### 8. Function Composition"
             ],
             "outputs": []
         },
@@ -426,9 +426,62 @@
             ]
         },
         {
+            "language": "markdown",
+            "source": [
+                "### 9. Return Length of Arguments Passed"
+            ],
+            "outputs": []
+        },
+        {
             "language": "typescript",
             "source": [
-                ""
+                "var argumentsLength = function(...args){\r\n    console.log(args.length)\r\n};"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "argumentsLength(1,2,3)"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "3",
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### 10. Allow One Function Call"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "var once = function(fn){\r\n    return function(...args){\r\n        \r\n    }\r\n}"
             ],
             "outputs": []
         }
