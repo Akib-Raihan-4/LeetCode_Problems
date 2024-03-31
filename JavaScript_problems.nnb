@@ -481,7 +481,74 @@
         {
             "language": "typescript",
             "source": [
-                "var once = function(fn){\r\n    return function(...args){\r\n        \r\n    }\r\n}"
+                "var once = function(fn){\r\n    let hasBeenCalled = false;\r\n\r\n    return function(...args){\r\n        if(!hasBeenCalled){\r\n            hasBeenCalled = true;\r\n            return fn(...args);\r\n        }\r\n        else{\r\n            return undefined\r\n        }\r\n    }\r\n}"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "let fn = (a,b,c) => (a+b+c)\r\nlet onceFn = once(fn)\r\n\r\nonceFn(1,2,3)"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[33m6\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "onceFn(1,2,3)"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                ""
             ],
             "outputs": []
         }
