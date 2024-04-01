@@ -546,6 +546,61 @@
             ]
         },
         {
+            "language": "markdown",
+            "source": [
+                "### 11. Memoize"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "function memoize(fn){\r\n    let dic = {};\r\n    return function(...args){\r\n        let key = JSON.stringify(args)\r\n        if(key in dic){\r\n            return dic[key]\r\n        }\r\n        dic[key] = fn(...args)\r\n        return dic[key]\r\n    }\r\n}"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "let callCount = 0\r\n\r\nconst memoizedFn = memoize(function(a,b){\r\n    callCount += 1;\r\n    return a + b;\r\n})\r\n\r\nlet result = memoizedFn(2,3)\r\nresult\r\n// callCount"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[33m5\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "language": "typescript",
             "source": [
                 ""
