@@ -601,6 +601,184 @@
             ]
         },
         {
+            "language": "markdown",
+            "source": [
+                "## Promise and Time"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### 12. Add Two Promises"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "var addTwoPromises = async function(promise1, promise2){\r\n    const [val1, val2] = await Promise.all([promise1, promise2])\r\n\r\n    return val1 + val2;\r\n}\r\n\r\n\r\n// Another way of doing this\r\n\r\nvar addTwoPromises = async (promise1, promise2) => {\r\n    return Promise.all([promise1, promise2])\r\n    .then((values) => {\r\n        const sum = values.reduce((total, value) => total + value, 0);\r\n        return sum;\r\n    })\r\n};"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "addTwoPromises(Promise.resolve(10), Promise.resolve(20)).then(console.log);"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "30",
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### 13. Sleep"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "async function sleep(millis) {\r\n    await new Promise(resolve  => setTimeout(resolve, millis));\r\n}\r\n\r\n\r\n// Another solution\r\n\r\nasync function sleep2(millis){\r\n    return new Promise((res, rej)=>{\r\n        setTimeout(()=>{\r\n            res()\r\n        }, millis)\r\n    })\r\n}"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "let t = Date.now()\r\nsleep2(100).then(()=>console.log(Date.now()-t))"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "103",
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### 14. Timeout Cancellation"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "var cancellable = function(fn, args, t){\r\n    var cancelFn = () => clearTimeout(timeoutFun);\r\n\r\n    var timeoutFun = setTimeout(()=>\r\n    fn(...args), t);\r\n\r\n    return cancelFn\r\n};"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "const result = [];\r\nconst fn = (x) => x * 5;\r\nconst args = [2], t = 20, cancelTimeMs = 50;\r\n\r\nconst start = performance.now();\r\n\r\nconst log = (...argsArr) => {\r\n    const diff = Math.floor(performance.now() - start);\r\n    result.push({\"time\": diff, \"returned\": fn(...argsArr)});\r\n}\r\n\r\nconst cancel = cancellable(log, args, t);\r\n\r\nconst maxT = Math.max(t, cancelTimeMs);\r\n\r\nsetTimeout(cancel, cancelTimeMs);\r\n\r\nsetTimeout(() => {\r\n    console.log(result); // [{\"time\":20,\"returned\":10}]\r\n}, maxT + 15);"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "Timeout {",
+                                "  _idleTimeout: \u001b[33m65\u001b[39m,",
+                                "  _idlePrev: \u001b[36m[TimersList]\u001b[39m,",
+                                "  _idleNext: \u001b[36m[TimersList]\u001b[39m,",
+                                "  _idleStart: \u001b[33m22720\u001b[39m,",
+                                "  _onTimeout: \u001b[36m[Function (anonymous)]\u001b[39m,",
+                                "  _timerArgs: \u001b[90mundefined\u001b[39m,",
+                                "  _repeat: \u001b[1mnull\u001b[22m,",
+                                "  _destroyed: \u001b[33mfalse\u001b[39m,",
+                                "  [\u001b[32mSymbol(refed)\u001b[39m]: \u001b[33mtrue\u001b[39m,",
+                                "  [\u001b[32mSymbol(kHasPrimitive)\u001b[39m]: \u001b[33mfalse\u001b[39m,",
+                                "  [\u001b[32mSymbol(asyncId)\u001b[39m]: \u001b[33m104\u001b[39m,",
+                                "  [\u001b[32mSymbol(triggerId)\u001b[39m]: \u001b[33m12\u001b[39m",
+                                "}"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "[ { time: 31, returned: 10 } ]",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "language": "typescript",
             "source": [
                 ""
