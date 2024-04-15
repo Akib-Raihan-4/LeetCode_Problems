@@ -615,6 +615,13 @@
             "outputs": []
         },
         {
+            "language": "markdown",
+            "source": [
+                "#### Reduce function how it works ? \r\n\"reduce()\" function takes a callback function it itterates over every element in an array and then returns a single value. <br>\r\nNow for example there is a array [1,2,3]. To sum it all the number let's take a callback function.<br>\r\narray.reduce((accumulator, currentValue) => { return accumulator + currentValue}, 0).<br>\r\n\"accumlator\" is basically cumulative of the previous value, the initial value for accumulator is set to 0, how ? <br>\r\ncheck the last the digit \"0\" is set, so that means accumulator declared with default value \"0\". <br>\r\nNow it will itterate over the array and sum all the digits in the array.<br>"
+            ],
+            "outputs": []
+        },
+        {
             "language": "typescript",
             "source": [
                 "var addTwoPromises = async function(promise1, promise2){\r\n    const [val1, val2] = await Promise.all([promise1, promise2])\r\n\r\n    return val1 + val2;\r\n}\r\n\r\n\r\n// Another way of doing this\r\n\r\nvar addTwoPromises = async (promise1, promise2) => {\r\n    return Promise.all([promise1, promise2])\r\n    .then((values) => {\r\n        const sum = values.reduce((total, value) => total + value, 0);\r\n        return sum;\r\n    })\r\n};"
