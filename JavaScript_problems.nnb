@@ -804,27 +804,167 @@
             "source": [
                 "var cancellable = function(fn, args, t) {\r\n    fn(...args);\r\n\r\n    var setIntervalFun = setInterval(()=> {\r\n        fn(...args)\r\n    }, t)\r\n\r\n    return () => clearInterval(setIntervalFun)\r\n    \r\n};"
             ],
-            "outputs": []
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
         },
         {
             "language": "typescript",
             "source": [
-                "/\r\n   const result = [];\r\n \r\n   const fn = (x) => x * 2;\r\n   const args = [4], t = 35, cancelTimeMs = 190;\r\n \r\n   const start = performance.now();\r\n \r\n   const log = (...argsArr) => {\r\n       const diff = Math.floor(performance.now() - start);\r\n       result.push({\"time\": diff, \"returned\": fn(...argsArr)});\r\n   }\r\n        \r\n   const cancel = cancellable(log, args, t);\r\n \r\n   setTimeout(cancel, cancelTimeMs);\r\n    \r\n   setTimeout(() => {\r\n       console.log(result); [\r\n                                 {\"time\":0,\"returned\":8},\r\n                                 {\"time\":35,\"returned\":8},\r\n                                 {\"time\":70,\"returned\":8},\r\n                                 {\"time\":105,\"returned\":8},\r\n                                 {\"time\":140,\"returned\":8},\r\n                                 {\"time\":175,\"returned\":8}\r\n                            ]\r\n}, cancelTimeMs + t + 15)    \r\n"
+                "const result = [];\r\n\r\nconst fn = (x) => x * 2;\r\nconst args = [4],\r\n  t = 35,\r\n  cancelTimeMs = 190;\r\n\r\nconst start = performance.now();\r\n\r\nconst log = (...argsArr) => {\r\n  const diff = Math.floor(performance.now() - start);\r\n  result.push({ time: diff, returned: fn(...argsArr) });\r\n};\r\n\r\nconst cancel = cancellable(log, args, t);\r\n\r\nsetTimeout(cancel, cancelTimeMs);\r\n\r\nsetTimeout(() => {\r\n  console.log(result);\r\n  [\r\n    { time: 0, returned: 8 },\r\n    { time: 35, returned: 8 },\r\n    { time: 70, returned: 8 },\r\n    { time: 105, returned: 8 },\r\n    { time: 140, returned: 8 },\r\n    { time: 175, returned: 8 },\r\n  ];\r\n}, cancelTimeMs + t + 15);\r\n"
             ],
             "outputs": [
                 {
                     "items": [
                         {
-                            "mime": "application/vnd.code.notebook.error",
-                            "value": {
-                                "name": "Error",
-                                "message": "Failed to generate code object, \nconst fn = (x) => x * 2;\r\n ^\n\nUnterminated regular expression",
-                                "stack": ""
-                            }
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "Timeout {",
+                                "  _idleTimeout: \u001b[33m240\u001b[39m,",
+                                "  _idlePrev: \u001b[36m[TimersList]\u001b[39m,",
+                                "  _idleNext: \u001b[36m[TimersList]\u001b[39m,",
+                                "  _idleStart: \u001b[33m7653\u001b[39m,",
+                                "  _onTimeout: \u001b[36m[Function (anonymous)]\u001b[39m,",
+                                "  _timerArgs: \u001b[90mundefined\u001b[39m,",
+                                "  _repeat: \u001b[1mnull\u001b[22m,",
+                                "  _destroyed: \u001b[33mfalse\u001b[39m,",
+                                "  [\u001b[32mSymbol(refed)\u001b[39m]: \u001b[33mtrue\u001b[39m,",
+                                "  [\u001b[32mSymbol(kHasPrimitive)\u001b[39m]: \u001b[33mfalse\u001b[39m,",
+                                "  [\u001b[32mSymbol(asyncId)\u001b[39m]: \u001b[33m103\u001b[39m,",
+                                "  [\u001b[32mSymbol(triggerId)\u001b[39m]: \u001b[33m12\u001b[39m",
+                                "}"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "[",
+                                "  { time: 0, returned: 8 },",
+                                "  { time: 41, returned: 8 },",
+                                "  { time: 88, returned: 8 },",
+                                "  { time: 136, returned: 8 },",
+                                "  { time: 183, returned: 8 }",
+                                "]",
+                                ""
+                            ]
                         }
                     ]
                 }
             ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### 16. Promise Time Limit"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "var timeLimit = function (fn, t) {\r\n  return async function (...args) {\r\n    const timeoutPromise = new Promise((resolve, reject) => {\r\n      setTimeout(() => reject(\"Time Limit Exceeded\"), t);\r\n    });\r\n    const resultFunction = fn(...args);\r\n\r\n    return Promise.race([timeoutPromise, resultFunction]);\r\n  };\r\n};\r\n\r\n// ANOTHER WAY:\r\n\r\nvar timeLimit2 = function (fn, t) {\r\n  return async function (...args) {\r\n    return new Promise((resolve, reject) => {\r\n      const timeoutPromise = setTimeout(() => reject(\"Time Limit Exceeded\"), t);\r\n      fn(...args)\r\n        .then((res) => resolve(res))\r\n        .catch((err) => reject(err))\r\n        .finally(() => clearTimeout(timeoutPromise));\r\n    });\r\n  };\r\n};\r\n\r\n// Another way is AWAIT\r\n\r\nvar timeLimit3 = function(fn, t){\r\n  return async function(...args){\r\n    return new Promise(async (resolve, reject) => {\r\n      const timeoutPromise = setTimeout(() => reject(\"Time Limit Exceeded\"), t);\r\n      try {\r\n        resolve(await fn(...args))\r\n      } catch (error) {\r\n        reject(error)\r\n      }\r\n    });\r\n  }\r\n}\r\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "\r\nconst limited = timeLimit3((t) => new Promise(res => setTimeout(res, t)), 100);\r\nlimited(150).catch(console.log) // \"Time Limit Exceeded\" at t=100ms\r\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "Time Limit Exceeded",
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### 17. Chache With Time Limit"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "var TimeLimitedCache = function() {\r\n    \r\n};\r\n\r\nTimeLimitedCache.prototype.set = function(key, value, duration){\r\n\r\n}\r\n\r\nTimeLimitedCache.prototype.count = function() {\r\n    \r\n};"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[36m[Function (anonymous)]\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "const timeLimitedCache = new TimeLimitedCache()\r\ntimeLimitedCache.set(1, 42, 1000); // false\r\ntimeLimitedCache.get(1) // 42\r\ntimeLimitedCache.count() // 1\r\n"
+            ],
+            "outputs": []
         }
     ]
 }
