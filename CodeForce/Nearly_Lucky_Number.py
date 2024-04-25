@@ -1,12 +1,19 @@
-def find_lucky(num):
-    lucky_digits = [4,7]
-    no_lucky = 0
-    while num != 0:
-        luck = num % 10
-        num = num // 10
-        if luck in lucky_digits:
-            no_lucky += 1
-    
-    return "YES" if no_lucky in lucky_digits  else "NO" 
+def chew_number(n):
+    temp = n
+    string_array = []
+    while n!= 0:
+        digit = n % 10
+        replace_digit = 9 - digit
+        if(digit > replace_digit):
+            string_array.append(str(replace_digit))
+        else:
+            string_array.append(str(digit))
         
-print(find_lucky(int(input())))
+        n = n // 10
+    
+    string_array = string_array[::-1]
+    s = "".join(string_array)
+    return int(s)
+
+n = int(input())
+print(chew_number(n))
